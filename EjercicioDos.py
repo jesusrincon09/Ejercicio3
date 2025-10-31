@@ -13,21 +13,27 @@ def find_indices(numbers, target):
 
     return "No se encontró ningún par que sume el valor objetivo."
 
-numbers = [7, 11, 15,8,1,2]
+def validate_input(user_input):
+    if user_input.strip().upper() == "FIN":
+        return None
+    if not user_input.isdigit():
+        raise ValueError("Entrada inválida. Debe ser un número entero positivo o 'FIN'.")
+    return int(user_input)
+
+
+numbers = [7, 11, 15, 8, 1, 2]
 
 print("Lista actual:", numbers)
 print("------- Escriba 'FIN' para salir. -----\n")
 
 while True:
     user_input = input("Ingrese el número objetivo a buscar: ")
-
-    if user_input.strip().upper() == "FIN":
-        print("\n Fin del programa")
-        break
-
     try:
-        target = int(user_input)
+        target = validate_input(user_input)
+        if target is None:
+            print("\nFin del programa")
+            break
         result = find_indices(numbers, target)
         print("Resultado:", result, "\n")
-    except ValueError:
-        print("Error: Debe ingresar un número entero o 'FIN' para salir.\n")
+    except ValueError as e:
+        print(f"Error: {e}\n")
