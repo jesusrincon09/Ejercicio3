@@ -52,7 +52,16 @@ http://localhost:8000/api/docs/swagger/
 
 ````
 
+## Endpoints principales
 
+| Entidad   | Endpoint                     | Métodos                      |
+|-----------|----------------------------- |------------------------------|
+| Libraries | /api/libraries/              | GET, POST, PUT, DELETE |
+| Books     | /api/books/                  | GET, POST, PUT, DELETE |
+| Members   | /api/members/                | GET, POST, PUT, DELETE |
+| Loans     | /api/loans/                  | GET, POST |
+| Loans     | /api/loans/{id}/return/      | POST |
+| token     | /api/token/                  | POST |
 
 
 
