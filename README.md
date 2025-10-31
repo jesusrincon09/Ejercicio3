@@ -35,8 +35,13 @@ git clone https://github.com/jesusrincon09/TestSoftwareEngineerMID.git
 ````
 
 3. Abrir terminal en la raíz del proyecto y ejecutar:
-
-
+```bash
+docker compose up --build
+````
+4. Acceder a la documentación de la API en el navegador:
+```bash
+[http://localhost:8000/swagger](http://localhost:8000/api/docs/swagger/)/
+````
 
 
 
