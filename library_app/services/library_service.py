@@ -1,5 +1,3 @@
-from library_app.models.library import Library
-
 class LibraryService:
     def __init__(self, repository):
         self.repository = repository

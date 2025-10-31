@@ -1,10 +1,9 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from django.http import Http404
 
-from library_app.models.book import Book
 from library_app.serializers.book_serializer import BookSerializer
 from library_app.repositories.book_repository import BookRepository
 from library_app.services.book_service import BookService

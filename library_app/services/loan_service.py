@@ -1,5 +1,4 @@
-from rest_framework.exceptions import NotFound, ValidationError
-from datetime import datetime
+from rest_framework.exceptions import NotFound
 from django.utils import timezone
 
 class LoanService:

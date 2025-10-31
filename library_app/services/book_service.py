@@ -1,9 +1,4 @@
 from datetime import datetime
-from django.core.exceptions import ObjectDoesNotExist
-from library_app.models.book import Book
-from library_app.repositories.library_repository import LibraryRepository
-from library_app.repositories.book_repository import BookRepository
-
 class BookService:
     def __init__(self, repository):
         self.repository = repository
