@@ -14,7 +14,7 @@ API REST para la **gestión de bibliotecas**, desarrollada con **Django REST Fra
 ## Descripción
 
 Esta API permite administrar **bibliotecas, libros, miembros y préstamos**. 
-Se mplementa:
+Se implementa:
 
 - CRUD para todas las entidades principales.
 - Validaciones necesarias para el correcto funcionamiento.
