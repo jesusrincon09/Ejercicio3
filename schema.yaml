@@ -1,0 +1,834 @@
+openapi: 3.0.3
+info:
+  title: API Biblioteca
+  version: 1.0.0
+  description: "\n### \U0001F4DA Sistema de Gestión de Bibliotecas\n\n**Contexto:**\
+    \  \nAplicación desarrollada para la administración de bibliotecas, permitiendo\
+    \ gestionar bibliotecas, libros y miembros mediante una API RESTful.\n\n**Autor:**\
+    \  \n- \U0001F468‍\U0001F4BB *Jesús Rincón*  \n- ✉️ Contacto: jesusrincon0927@gmail.com\
+    \ \n\n**Tecnologías utilizadas:**  \n- \U0001F40D **Django 5 / Django REST Framework**\
+    \  \n- \U0001F510 **JWT (SimpleJWT)** para autenticación  \n- \U0001F9E9 **drf-spectacular**\
+    \ para documentación de la API  \n- \U0001F5C4️ **PostgreSQL** como base de datos\
+    \ principal  \n- \U0001F9E0 **Arquitectura basada en capas (Repository / Service\
+    \ / ViewSet)**\n\n**Arquitectura:**  \n- `models/` → Definición de datos  \n-\
+    \ `repositories/` → Capa de acceso a datos  \n- `services/` → Lógica de negocio\
+    \  \n- `views/` → Endpoints de la API (ViewSets de DRF)  \n- `serializers/` →\
+    \ Validación y transformación de datos  \n\n"
+  contact:
+    name: Jesús Rincón
+    email: jesusrincon0927@gmail.com
+  license:
+    name: MIT License
+paths:
+  /api/books/:
+    get:
+      operationId: api_books_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - Libros
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBookList'
+          description: ''
+    post:
+      operationId: api_books_create
+      tags:
+      - Libros
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Book'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Book'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+          description: ''
+  /api/books/{id}/:
+    get:
+      operationId: api_books_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Libros
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+          description: ''
+    put:
+      operationId: api_books_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Libros
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Book'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Book'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+          description: ''
+    patch:
+      operationId: api_books_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Libros
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBook'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBook'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBook'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+          description: ''
+    delete:
+      operationId: api_books_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Libros
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/libraries/:
+    get:
+      operationId: api_libraries_list
+      description: Retorna una lista con todas las bibliotecas registradas en el sistema.
+      summary: Listar todas las bibliotecas
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - Bibliotecas
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLibraryList'
+          description: Lista de bibliotecas obtenida correctamente
+        '500':
+          description: Error interno del servidor.
+    post:
+      operationId: api_libraries_create
+      description: Cre
+      summary: Crear bibliotecas
+      tags:
+      - Bibliotecas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Library'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Library'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Library'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Library'
+          description: Lista de bibliotecas obtenida correctamente
+        '500':
+          description: Error interno del servidor.
+  /api/libraries/{id}/:
+    get:
+      operationId: api_libraries_retrieve
+      description: Retorna la biblioteca según el ID ingresado.
+      summary: Obtener biblioteca por ID
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this library.
+        required: true
+      tags:
+      - Bibliotecas
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Library'
+          description: Biblioteca obtenida correctamente.
+        '404':
+          description: La biblioteca no existe.
+        '500':
+          description: Error interno del servidor.
+    put:
+      operationId: api_libraries_update
+      description: Actualiza parcialmente o completamente una biblioteca según el
+        ID proporcionado.
+      summary: Actualizar una biblioteca existente
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this library.
+        required: true
+      tags:
+      - Bibliotecas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Library'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Library'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Library'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: Biblioteca actualizada correctamente.
+        '400':
+          description: Datos inválidos o error de validación.
+    patch:
+      operationId: api_libraries_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this library.
+        required: true
+      tags:
+      - Bibliotecas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLibrary'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLibrary'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLibrary'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Library'
+          description: ''
+    delete:
+      operationId: api_libraries_destroy
+      description: Elimina una biblioteca existente según su ID.
+      summary: Eliminar biblioteca
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this library.
+        required: true
+      tags:
+      - Bibliotecas
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: Biblioteca eliminada correctamente.
+        '404':
+          description: La biblioteca no existe.
+        '400':
+          description: Error al eliminar la biblioteca.
+  /api/members/:
+    get:
+      operationId: api_members_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - Miembros
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMemberList'
+          description: ''
+    post:
+      operationId: api_members_create
+      tags:
+      - Miembros
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Member'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Member'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Member'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+          description: ''
+  /api/members/{id}/:
+    get:
+      operationId: api_members_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this member.
+        required: true
+      tags:
+      - Miembros
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+          description: ''
+    put:
+      operationId: api_members_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this member.
+        required: true
+      tags:
+      - Miembros
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Member'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Member'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Member'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+          description: ''
+    patch:
+      operationId: api_members_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this member.
+        required: true
+      tags:
+      - Miembros
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMember'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMember'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMember'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+          description: ''
+    delete:
+      operationId: api_members_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this member.
+        required: true
+      tags:
+      - Miembros
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/token/:
+    post:
+      operationId: api_token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - Autenticación
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/token/refresh/:
+    post:
+      operationId: api_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - Autenticación
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 150
+        author:
+          type: string
+          maxLength: 100
+        isbn:
+          type: string
+          maxLength: 20
+        published_year:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+        stock:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        library:
+          type: integer
+      required:
+      - author
+      - created_at
+      - id
+      - isbn
+      - library
+      - title
+      - updated_at
+    Library:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        address:
+          type: string
+        phone:
+          type: string
+      required:
+      - address
+      - id
+      - name
+      - phone
+    Member:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone:
+          type: string
+          nullable: true
+          maxLength: 20
+        address:
+          type: string
+          nullable: true
+          maxLength: 200
+        membership_date:
+          type: string
+          format: date
+          readOnly: true
+        is_active:
+          type: boolean
+        max_loans:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        library:
+          type: integer
+      required:
+      - created_at
+      - email
+      - id
+      - library
+      - membership_date
+      - name
+      - updated_at
+    PaginatedBookList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book'
+    PaginatedLibraryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Library'
+    PaginatedMemberList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Member'
+    PatchedBook:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 150
+        author:
+          type: string
+          maxLength: 100
+        isbn:
+          type: string
+          maxLength: 20
+        published_year:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+        stock:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        library:
+          type: integer
+    PatchedLibrary:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        address:
+          type: string
+        phone:
+          type: string
+    PatchedMember:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone:
+          type: string
+          nullable: true
+          maxLength: 20
+        address:
+          type: string
+          nullable: true
+          maxLength: 200
+        membership_date:
+          type: string
+          format: date
+          readOnly: true
+        is_active:
+          type: boolean
+        max_loans:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        library:
+          type: integer
+    TokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - password
+      - refresh
+      - username
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
