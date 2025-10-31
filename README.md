@@ -32,6 +32,7 @@ Se mplementa:
 
 ```bash
 git clone https://github.com/jesusrincon09/TestSoftwareEngineerMID.git
+````
 
 3. Abrir terminal en la raíz del proyecto y ejecutar:
 
