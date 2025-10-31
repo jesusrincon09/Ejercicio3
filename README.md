@@ -40,7 +40,16 @@ docker compose up --build
 ````
 4. Acceder a la documentación de la API en el navegador:
 ```bash
-[http://localhost:8000/swagger](http://localhost:8000/api/docs/swagger/)/
+http://localhost:8000/api/docs/swagger/
+````
+5. *Nota:* El contenedor de Docker incluye todo lo necesario para ejecutar el proyecto, incluyendo entorno virtual y base de datos.
+6. Usuario de prueba para generar token de acceso
+```bash
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
 ````
 
 
