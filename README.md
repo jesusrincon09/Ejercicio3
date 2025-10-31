@@ -5,7 +5,7 @@ Este repositorio contiene el desarrollo de la prueba técnica para el **cargo So
 3. sistema de gestión de bibliotecas sencillo con clases para libros, bibliotecas y miembros, el cual se explica a continuacion. 
 
 
-#API Biblioteca 
+# API Biblioteca 
 
 API REST para la **gestión de bibliotecas**, desarrollada con **Django REST Framework**, siguiendo una arquitectura en capas y principios SOLID.
 
