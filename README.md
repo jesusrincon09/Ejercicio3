@@ -5,7 +5,7 @@ Este repositorio contiene el desarrollo de la prueba técnica para el **cargo So
 3. sistema de gestión de bibliotecas sencillo con clases para libros, bibliotecas y miembros, el cual se explica a continuacion. 
 
 
-# API Biblioteca 
+## API Biblioteca 
 
 API REST para la **gestión de bibliotecas**, desarrollada con **Django REST Framework**, siguiendo una arquitectura en capas y principios SOLID.
 
@@ -22,3 +22,22 @@ Se mplementa:
 - Autenticación por **Token**.
 - Arquitectura en capas: **Models → Repositories → services → ViewSets → Serializers**.
 ---
+
+## Proceso de instalación 
+1. **Instalar Docker**  
+   - Para Windows: [Guía de instalación](https://docs.docker.com/desktop/setup/install/windows-install/)  
+   - Para Linux: instalar según tu distribución (Ubuntu, Debian, Fedora, etc.)
+
+2. **Clonar el repositorio**  
+
+```bash
+git clone https://github.com/jesusrincon09/TestSoftwareEngineerMID.git
+
+3. Abrir terminal en la raíz del proyecto y ejecutar:
+
+
+
+
+
+
+
